@@ -1,0 +1,71 @@
+'''
+# 10. Sales Performance Dashboard
+### Problem Statement
+A retail company stores sales information.
+Each sale contains:
+* Salesperson ID
+* Product
+* Quantity
+* Revenue
+* Region
+### Requirements
+1. Retrieve all sales records.
+2. Sort records based on revenue.
+3. Search a salesperson using Employee ID.
+4. Display Top 5 salespersons.
+5. Find the highest revenue region.
+6. Update monthly incentive status for eligible salespersons.
+### Concepts
+* SQL GROUP BY
+* Sorting
+* Binary Search
+* Dictionaries
+* SQLite
+'''
+
+
+CREATE DATABASE sales_db;
+
+USE sales_db;
+
+CREATE TABLE sales (
+    salesperson_id INT PRIMARY KEY,
+    salesperson_name VARCHAR(100),
+    product VARCHAR(100),
+    quantity INT,
+    revenue DECIMAL(10,2),
+    region VARCHAR(50),
+    incentive_status VARCHAR(20)
+);
+
+INSERT INTO sales VALUES
+(101,'Rahul','Laptop',5,325000,'North','Pending'),
+(102,'Aman','Mouse',20,10000,'South','Pending'),
+(103,'Priya','Keyboard',15,18000,'East','Pending'),
+(104,'Neha','Monitor',10,120000,'West','Pending'),
+(105,'Rohit','Printer',8,68000,'North','Pending'),
+(106,'Anjali','Speaker',25,75000,'South','Pending');
+
+SELECT * FROM sales;
+
+SELECT * FROM sales
+ORDER BY revenue DESC;
+
+SELECT * FROM sales
+WHERE salesperson_id = 103;
+
+SELECT * FROM sales
+ORDER BY revenue DESC
+LIMIT 5;
+
+SELECT region, SUM(revenue) AS total_revenue
+FROM sales
+GROUP BY region
+ORDER BY total_revenue DESC
+LIMIT 1;
+
+UPDATE sales
+SET incentive_status = 'Eligible'
+WHERE revenue >= 70000;
+
+SELECT * FROM sales;

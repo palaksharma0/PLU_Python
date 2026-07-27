@@ -1,0 +1,91 @@
+'''
+# 8. Ride Booking Management System
+### Problem Statement
+A cab company stores:
+Drivers
+Customers
+Bookings
+### Requirements
+1. Fetch available drivers.
+2. Store them in a Graph representing city connectivity.
+3. Find the nearest available driver using **BFS**.
+4. Assign the booking.
+5. Update driver availability.
+### Concepts
+* Graph
+* BFS
+* SQL JOIN
+* UPDATE
+'''
+
+
+CREATE DATABASE ride_booking_db;
+
+USE ride_booking_db;
+
+CREATE TABLE drivers (
+    driver_id INT PRIMARY KEY,
+    driver_name VARCHAR(100),
+    city VARCHAR(50),
+    availability VARCHAR(20)
+);
+
+CREATE TABLE customers (
+    customer_id INT PRIMARY KEY,
+    customer_name VARCHAR(100),
+    city VARCHAR(50)
+);
+
+CREATE TABLE bookings (
+    booking_id INT PRIMARY KEY,
+    customer_id INT,
+    driver_id INT,
+    booking_status VARCHAR(20),
+    FOREIGN KEY (customer_id) REFERENCES customers(customer_id),
+    FOREIGN KEY (driver_id) REFERENCES drivers(driver_id)
+);
+
+INSERT INTO drivers VALUES
+(101,'Rahul','Delhi','Available'),
+(102,'Aman','Noida','Available'),
+(103,'Rohit','Gurgaon','Busy'),
+(104,'Neha','Faridabad','Available');
+
+INSERT INTO customers VALUES
+(201,'Priya','Delhi'),
+(202,'Anjali','Noida'),
+(203,'Karan','Gurgaon'),
+(204,'Simran','Faridabad');
+
+INSERT INTO bookings VALUES
+(1,201,101,'Booked'),
+(2,202,102,'Booked'),
+(3,203,103,'Completed'),
+(4,204,104,'Pending');
+
+SELECT * FROM drivers
+WHERE availability='Available';
+
+SELECT
+b.booking_id,
+c.customer_name,
+d.driver_name,
+c.city,
+b.booking_status
+FROM bookings b
+JOIN customers c
+ON b.customer_id = c.customer_id
+JOIN drivers d
+ON b.driver_id = d.driver_id;
+
+SELECT * FROM drivers
+WHERE city='Delhi'
+AND availability='Available';
+
+UPDATE drivers
+SET availability='Busy'
+WHERE driver_id=101;
+
+SELECT * FROM drivers;
+
+SELECT * FROM bookings;

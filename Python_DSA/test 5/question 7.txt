@@ -1,0 +1,58 @@
+'''
+# 7. Employee Attendance Analytics
+### Problem Statement
+A company records employee attendance.
+Each record contains:
+* Employee ID
+* Name
+* Check-in Time
+* Check-out Time
+### Requirements
+1. Retrieve attendance records.
+2. Calculate total working hours.
+3. Sort employees by total hours worked.
+4. Search employees using Employee ID.
+5. Display employees who worked more than 45 hours this week.
+### Concepts
+* SQL
+* Sorting
+* Binary Search
+* DateTime
+'''
+
+CREATE DATABASE attendance_db;
+
+USE attendance_db;
+
+CREATE TABLE attendance (
+    employee_id INT PRIMARY KEY,
+    name VARCHAR(100),
+    check_in TIME,
+    check_out TIME,
+    total_hours DECIMAL(4,2)
+);
+
+INSERT INTO attendance VALUES
+(101,'Rahul','09:00:00','18:00:00',45),
+(102,'Aman','09:30:00','19:00:00',47),
+(103,'Priya','08:45:00','17:45:00',44),
+(104,'Neha','09:15:00','18:30:00',46),
+(105,'Rohit','10:00:00','19:00:00',42),
+(106,'Anjali','09:00:00','18:30:00',48);
+
+SELECT * FROM attendance;
+
+SELECT
+employee_id,
+name,
+TIMEDIFF(check_out, check_in) AS working_hours
+FROM attendance;
+
+SELECT * FROM attendance
+ORDER BY total_hours DESC;
+
+SELECT * FROM attendance
+WHERE employee_id = 104;
+
+SELECT * FROM attendance
+WHERE total_hours > 45;

@@ -1,0 +1,65 @@
+'''
+# 4. College Placement Portal
+### Problem Statement
+A college stores student records in SQLite.
+Each student contains:
+* Roll Number
+* Name
+* CGPA
+* Skills
+* Placement Status
+### Requirements
+1. Retrieve all students.
+2. Sort students by CGPA using **Heap Sort**.
+3. Search students by Roll Number.
+4. Display students eligible for placements (CGPA > 7.5).
+5. Update placement status after selection.
+### Concepts
+* Heap
+* Heap Sort
+* Binary Search
+* SQL UPDATE
+'''
+
+CREATE DATABASE placement_db;
+USE placement_db;
+
+CREATE TABLE students (
+    roll_number INT PRIMARY KEY,
+    name VARCHAR(100),
+    cgpa DECIMAL(3,2),
+    skills VARCHAR(100),
+    placement_status VARCHAR(20)
+);
+
+INSERT INTO students VALUES
+(101,'Rahul',8.50,'Python','Not Placed'),
+(102,'Aman',7.20,'Java','Not Placed'),
+(103,'Priya',9.10,'C++','Not Placed'),
+(104,'Neha',6.80,'SQL','Not Placed'),
+(105,'Rohit',8.00,'Python, SQL','Not Placed'),
+(106,'Anjali',7.90,'Java, Python','Not Placed'); 
+
+SELECT * FROM students;
+
+SELECT * FROM students
+ORDER BY cgpa DESC;
+
+SELECT * FROM students
+WHERE roll_number = 103;
+
+SELECT * FROM students
+WHERE cgpa > 7.5;
+
+UPDATE students
+SET placement_status = 'Placed'
+WHERE roll_number = 103;
+
+SELECT * FROM students
+WHERE roll_number = 103;
+
+SELECT * FROM students
+WHERE placement_status = 'Placed';
+
+SELECT * FROM students
+WHERE placement_status = 'Not Placed';

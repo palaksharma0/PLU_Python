@@ -1,0 +1,83 @@
+'''
+ 9. Library Book Borrowing System
+### Problem Statement
+A library stores books and borrowing history.
+Tables:
+Books
+Members
+Borrowed Books
+### Requirements
+1. Display all available books.
+2. Sort books alphabetically using **Merge Sort**.
+3. Search books by Book ID.
+4. Borrow a book.
+5. Update book availability.
+6. Display overdue books.
+### Concepts
+* Merge Sort
+* Binary Search
+* SQLite
+* SQL UPDATE
+'''
+
+CREATE DATABASE library_db;
+
+USE library_db;
+
+CREATE TABLE books (
+    book_id INT PRIMARY KEY,
+    book_name VARCHAR(100),
+    author VARCHAR(100),
+    availability VARCHAR(20)
+);
+
+CREATE TABLE members (
+    member_id INT PRIMARY KEY,
+    member_name VARCHAR(100),
+    phone VARCHAR(15)
+);
+
+CREATE TABLE borrowed_books (
+    borrow_id INT PRIMARY KEY,
+    member_id INT,
+    book_id INT,
+    borrow_date DATE,
+    return_date DATE,
+    FOREIGN KEY (member_id) REFERENCES members(member_id),
+    FOREIGN KEY (book_id) REFERENCES books(book_id)
+);
+
+INSERT INTO books VALUES
+(101,'Python Basics','Amit Kumar','Available'),
+(102,'Database Systems','R. Sharma','Available'),
+(103,'Data Structures','S. Verma','Borrowed'),
+(104,'Operating System','P. Singh','Available'),
+(105,'Computer Networks','M. Gupta','Borrowed');
+
+INSERT INTO members VALUES
+(201,'Rahul','9876543210'),
+(202,'Priya','9876543211'),
+(203,'Aman','9876543212');
+
+INSERT INTO borrowed_books VALUES
+(1,201,103,'2026-07-01','2026-07-15'),
+(2,202,105,'2026-07-05','2026-07-20');
+
+SELECT * FROM books
+WHERE availability='Available';
+
+SELECT * FROM books
+ORDER BY book_name ASC;
+
+SELECT * FROM books
+WHERE book_id=102;
+
+UPDATE books
+SET availability='Borrowed'
+WHERE book_id=102;
+
+SELECT * FROM books;
+
+SELECT *
+FROM borrowed_books
+WHERE return_date < CURDATE();
